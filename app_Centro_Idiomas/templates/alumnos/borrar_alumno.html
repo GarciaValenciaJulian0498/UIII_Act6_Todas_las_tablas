@@ -1,0 +1,19 @@
+<!-- app_Idiomas/templates/alumnos/borrar_alumno.html -->
+{% extends 'base.html' %}
+
+{% block title %}Borrar Alumno{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow p-4 bg-danger text-white">
+        <h2 class="card-title text-center mb-4">Confirmar Borrado de Alumno</h2>
+        <p class="text-center">¿Estás seguro de que quieres borrar al alumno **{{ alumno.nombre }} {{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}**?</p>
+        <p class="text-center">Esta acción no se puede deshacer.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-block mt-4">Sí, Borrar Alumno</button>
+            <a href="{% url 'ver_alumnos' %}" class="btn btn-outline-light btn-block mt-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

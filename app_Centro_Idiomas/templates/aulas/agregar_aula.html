@@ -1,0 +1,33 @@
+<!-- app_Idiomas/templates/aulas/agregar_aula.html -->
+{% extends 'base.html' %}
+
+{% block title %}Agregar Aula{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow p-4" style="background-color: #e8f5e9;">
+        <h2 class="card-title text-center mb-4" style="color: #2e7d32;">Agregar Nueva Aula</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="numero_aula" style="color: #607d8b;">Número de Aula:</label>
+                <input type="text" class="form-control" id="numero_aula" name="numero_aula" required>
+            </div>
+            <div class="form-group">
+                <label for="capacidad" style="color: #607d8b;">Capacidad:</label>
+                <input type="number" class="form-control" id="capacidad" name="capacidad" required min="1">
+            </div>
+            <div class="form-group">
+                <label for="ubicacion" style="color: #607d8b;">Ubicación:</label>
+                <input type="text" class="form-control" id="ubicacion" name="ubicacion">
+            </div>
+            <div class="form-group">
+                <label for="tipo_aula" style="color: #607d8b;">Tipo de Aula:</label>
+                <input type="text" class="form-control" id="tipo_aula" name="tipo_aula" placeholder="Ej: Laboratorio, Teoría">
+            </div>
+            <button type="submit" class="btn btn-success btn-block mt-4">Guardar Aula</button>
+            <a href="{% url 'ver_aulas' %}" class="btn btn-secondary btn-block mt-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

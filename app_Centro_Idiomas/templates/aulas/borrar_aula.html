@@ -1,0 +1,19 @@
+<!-- app_Idiomas/templates/aulas/borrar_aula.html -->
+{% extends 'base.html' %}
+
+{% block title %}Borrar Aula{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow p-4 bg-danger text-white">
+        <h2 class="card-title text-center mb-4">Confirmar Borrado de Aula</h2>
+        <p class="text-center">¿Estás seguro de que quieres borrar el aula **{{ aula.numero_aula }}**?</p>
+        <p class="text-center">Esta acción no se puede deshacer y podría afectar a clases asociadas.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-block mt-4">Sí, Borrar Aula</button>
+            <a href="{% url 'ver_aulas' %}" class="btn btn-outline-light btn-block mt-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

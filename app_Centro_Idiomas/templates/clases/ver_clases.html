@@ -1,0 +1,53 @@
+<!-- UIII_Centro_de_Idiomas_0498/backend_Idiomas/app_Idiomas/templates/clases/ver_clases.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Ver Clases{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #6a1b9a;">Lista de Clases</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped shadow-sm" style="border-radius: 10px; overflow: hidden; background-color: #f3e5f5;">
+            <thead class="text-white" style="background-color: #8e24aa;">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Capacidad</th>
+                    <th scope="col">Nivel</th>
+                    <th scope="col">Profesor</th>
+                    <th scope="col">Idioma</th>
+                    <th scope="col">Aula</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for clase in clases %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ clase.nombre }}</td>
+                    <td>{{ clase.descripcion|default:"N/A" }}</td>
+                    <td>{{ clase.capacidad }}</td>
+                    <td>{{ clase.nivel }}</td>
+                    <td>{{ clase.id_profesor.nombre }} {{ clase.id_profesor.apellido_paterno }}</td>
+                    <td>{{ clase.idioma.nombre }}</td>
+                    <td>{{ clase.aula.numero_aula }}</td>
+                    <td>
+                        <a href="{% url 'actualizar_clase' clase.pk %}" class="btn btn-sm btn-info text-white me-2" style="background-color: #ab47bc; border: none;">Editar</a>
+                        <a href="{% url 'borrar_clase' clase.pk %}" class="btn btn-sm btn-danger" style="background-color: #e57373; border: none;">Borrar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center p-4">No hay clases disponibles. <a href="{% url 'agregar_clase' %}" style="color: #6a1b9a;">¡Agrega una ahora!</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'agregar_clase' %}" class="btn text-white" style="background-color: #6a1b9a; border-radius: 8px;">Agregar Nueva Clase</a>
+    </div>
+</div>
+{% endblock %}

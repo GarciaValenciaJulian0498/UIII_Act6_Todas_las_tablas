@@ -1,0 +1,30 @@
+<!-- UIII_Centro_de_Idiomas_0498/backend_Idiomas/app_Idiomas/templates/clases/borrar_clase.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Borrar Clase{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-danger" style="border-radius: 15px;">
+                <div class="card-header bg-danger text-white text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h2 class="mb-0">Confirmar Eliminación de Clase</h2>
+                </div>
+                <div class="card-body p-4" style="background-color: #ffebee;">
+                    <p class="lead text-center">¿Estás seguro de que quieres eliminar la clase <strong>"{{ clase.nombre }}"</strong>?</p>
+                    <p class="text-center text-danger">¡Esta acción no se puede deshacer!</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-danger" style="border-radius: 8px;">Sí, Eliminar Clase</button>
+                            <a href="{% url 'ver_clases' %}" class="btn btn-outline-secondary" style="border-radius: 8px;">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!-- app_Idiomas/templates/aulas/ver_aulas.html -->
+{% extends 'base.html' %}
+
+{% block title %}Ver Aulas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow p-4" style="background-color: #ede7f6;">
+        <h2 class="card-title text-center mb-4" style="color: #4527a0;">Lista de Aulas</h2>
+        <a href="{% url 'agregar_aula' %}" class="btn btn-primary mb-3">Agregar Nueva Aula</a>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Número de Aula</th>
+                        <th>Capacidad</th>
+                        <th>Ubicación</th>
+                        <th>Tipo de Aula</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aula in aulas %}
+                    <tr>
+                        <td>{{ aula.numero_aula }}</td>
+                        <td>{{ aula.capacidad }}</td>
+                        <td>{{ aula.ubicacion|default_if_none:"N/A" }}</td>
+                        <td>{{ aula.tipo_aula|default_if_none:"N/A" }}</td>
+                        <td>
+                            <a href="{% url 'actualizar_aula' aula.pk %}" class="btn btn-info btn-sm">Editar</a>
+                            <a href="{% url 'borrar_aula' aula.pk %}" class="btn btn-danger btn-sm">Borrar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay aulas registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

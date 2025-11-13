@@ -1,0 +1,48 @@
+<!-- app_Idiomas/templates/alumnos/actualizar_alumno.html -->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Alumno{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow p-4" style="background-color: #fff3e0;">
+        <h2 class="card-title text-center mb-4" style="color: #ef6c00;">Actualizar Alumno: {{ alumno.nombre }}</h2>
+        <form method="post" action="{% url 'realizar_actualizacion_alumno' alumno.pk %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nombre" style="color: #607d8b;">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ alumno.nombre }}" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido_paterno" style="color: #607d8b;">Apellido Paterno:</label>
+                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" value="{{ alumno.apellido_paterno }}" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido_materno" style="color: #607d8b;">Apellido Materno:</label>
+                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" value="{{ alumno.apellido_materno }}" required>
+            </div>
+            <div class="form-group">
+                <label for="correo" style="color: #607d8b;">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="correo" name="correo" value="{{ alumno.correo }}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono" style="color: #607d8b;">Teléfono:</label>
+                <input type="text" class="form-control" id="telefono" name="telefono" value="{{ alumno.telefono|default_if_none:"" }}">
+            </div>
+            <div class="form-group">
+                <label for="clase" style="color: #607d8b;">Clase:</label>
+                <select class="form-control" id="clase" name="clase">
+                    <option value="">-- Seleccione una clase --</option>
+                    {% for clase in clases %}
+                        <option value="{{ clase.id }}" {% if alumno.clase == clase %}selected{% endif %}>
+                            {{ clase.nombre_clase }} ({{ clase.idioma }} - {{ clase.nivel }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-warning btn-block mt-4">Actualizar Alumno</button>
+            <a href="{% url 'ver_alumnos' %}" class="btn btn-secondary btn-block mt-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!-- UIII_Centro_de_Idiomas_0498/backend_Idiomas/app_Idiomas/templates/clases/agregar_clase.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Agregar Clase{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg" style="border-radius: 15px; border: none;">
+                <div class="card-header text-white text-center" style="background-color: #8e24aa; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h2 class="mb-0">Agregar Nueva Clase</h2>
+                </div>
+                <div class="card-body p-4" style="background-color: #f3e5f5;">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label text-purple-dark">Nombre de la Clase:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required style="border-radius: 8px; border-color: #ce93d8;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label text-purple-dark">Descripción:</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" style="border-radius: 8px; border-color: #ce93d8;"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacidad" class="form-label text-purple-dark">Capacidad:</label>
+                            <input type="number" class="form-control" id="capacidad" name="capacidad" required style="border-radius: 8px; border-color: #ce93d8;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nivel" class="form-label text-purple-dark">Nivel:</label>
+                            <select class="form-select" id="nivel" name="nivel" required style="border-radius: 8px; border-color: #ce93d8;">
+                                <option value="Básico A1">Básico A1</option>
+                                <option value="Básico A2">Básico A2</option>
+                                <option value="Intermedio B1">Intermedio B1</option>
+                                <option value="Intermedio B2">Intermedio B2</option>
+                                <option value="Avanzado C1">Avanzado C1</option>
+                                <option value="Avanzado C2">Avanzado C2</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_profesor" class="form-label text-purple-dark">Profesor:</label>
+                            <select class="form-select" id="id_profesor" name="id_profesor" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for profesor in profesores %}
+                                    <option value="{{ profesor.pk }}">{{ profesor.nombre }} {{ profesor.apellido }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idioma" class="form-label text-purple-dark">Idioma:</label>
+                            <select class="form-select" id="idioma" name="idioma" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for idioma in idiomas %}
+                                    <option value="{{ idioma.pk }}">{{ idioma.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="aula" class="form-label text-purple-dark">Aula:</label>
+                            <select class="form-select" id="aula" name="aula" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for aula in aulas %}
+                                    <option value="{{ aula.pk }}">{{ aula.numero_aula }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn text-white" style="background-color: #ab47bc; border-radius: 8px;">Agregar Clase</button>
+                            <a href="{% url 'ver_clases' %}" class="btn btn-outline-secondary" style="border-radius: 8px;">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

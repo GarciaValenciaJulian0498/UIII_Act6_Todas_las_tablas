@@ -1,0 +1,81 @@
+<!-- UIII_Centro_de_Idiomas_0498/backend_Idiomas/app_Idiomas/templates/clases/actualizar_clase.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Clase{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg" style="border-radius: 15px; border: none;">
+                <div class="card-header text-white text-center" style="background-color: #8e24aa; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                    <h2 class="mb-0">Actualizar Clase: {{ clase.nombre }}</h2>
+                </div>
+                <div class="card-body p-4" style="background-color: #f3e5f5;">
+                    <form method="post" action="{% url 'realizar_actualizacion_clase' clase.pk %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label text-purple-dark">Nombre de la Clase:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ clase.nombre }}" required style="border-radius: 8px; border-color: #ce93d8;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label text-purple-dark">Descripción:</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" style="border-radius: 8px; border-color: #ce93d8;">{{ clase.descripcion|default_if_none:"" }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="capacidad" class="form-label text-purple-dark">Capacidad:</label>
+                            <input type="number" class="form-control" id="capacidad" name="capacidad" value="{{ clase.capacidad }}" required style="border-radius: 8px; border-color: #ce93d8;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nivel" class="form-label text-purple-dark">Nivel:</label>
+                            <select class="form-select" id="nivel" name="nivel" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for choice in clase.get_nivel_display_choices %} {# Esto es un ejemplo, Django no tiene get_choices para CharField, se usa una lista manual #}
+                                {% with current_choice=choice.0 %}
+                                <option value="{{ current_choice }}" {% if clase.nivel == current_choice %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endwith %}
+                                {% empty %}
+                                <option value="Básico A1" {% if clase.nivel == 'Básico A1' %}selected{% endif %}>Básico A1</option>
+                                <option value="Básico A2" {% if clase.nivel == 'Básico A2' %}selected{% endif %}>Básico A2</option>
+                                <option value="Intermedio B1" {% if clase.nivel == 'Intermedio B1' %}selected{% endif %}>Intermedio B1</option>
+                                <option value="Intermedio B2" {% if clase.nivel == 'Intermedio B2' %}selected{% endif %}>Intermedio B2</option>
+                                <option value="Avanzado C1" {% if clase.nivel == 'Avanzado C1' %}selected{% endif %}>Avanzado C1</option>
+                                <option value="Avanzado C2" {% if clase.nivel == 'Avanzado C2' %}selected{% endif %}>Avanzado C2</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_profesor" class="form-label text-purple-dark">Profesor:</label>
+                            <select class="form-select" id="id_profesor" name="id_profesor" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for profesor in profesores %}
+                                    <option value="{{ profesor.pk }}" {% if clase.id_profesor.pk == profesor.pk %}selected{% endif %}>{{ profesor.nombre }} {{ profesor.apellido }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idioma" class="form-label text-purple-dark">Idioma:</label>
+                            <select class="form-select" id="idioma" name="idioma" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for idioma in idiomas %}
+                                    <option value="{{ idioma.pk }}" {% if clase.idioma.pk == idioma.pk %}selected{% endif %}>{{ idioma.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="aula" class="form-label text-purple-dark">Aula:</label>
+                            <select class="form-select" id="aula" name="aula" required style="border-radius: 8px; border-color: #ce93d8;">
+                                {% for aula in aulas %}
+                                    <option value="{{ aula.pk }}" {% if clase.aula.pk == idioma.pk %}selected{% endif %}>{{ aula.numero_aula }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn text-white" style="background-color: #ab47bc; border-radius: 8px;">Actualizar Clase</button>
+                            <a href="{% url 'ver_clases' %}" class="btn btn-outline-secondary" style="border-radius: 8px;">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
